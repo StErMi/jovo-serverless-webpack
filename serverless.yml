@@ -46,7 +46,7 @@ functions:
     name: ${self:custom.skillName}
     handler: src/index.handler
     events:
-      - alexaSkill: amzn1.ask.skill.f7a25b75-650a-473e-8089-798c87d19d60
+      - alexaSkill: YOUR_SKILL_ID
       - httpApi:
           method: POST
           path: /alexa
