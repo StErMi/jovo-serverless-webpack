@@ -29,6 +29,8 @@
   "scripts": {
     "test": "jest",
     "tsc": "tsc",
+    "build:ncc": "npm run tsc && ncc build ./src/index.ts -o ncc-build && cp ./dist/src/config.js ./ncc-build",
+    "run:ncc": "cd ./ncc-build && node ./index.js --webhook",
     "tscw": "tsc --watch",
     "tslint": "tslint -p tsconfig.json -c tslint.json",
     "bundle": "gulp --gulpfile node_modules/jovo-framework/gulpfile.js build-ts --cwd ./",
