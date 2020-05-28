@@ -1,0 +1,52 @@
+org: YOUR_ORG
+app: YOUR_APP
+service: YOUR_SERVICE
+
+# Create an optimized package for our functions
+package:
+  individually: true
+  excludeDevDependencies: true
+
+plugins:
+  - serverless-bundle
+  - serverless-offline
+
+custom:
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or fallsback to what we have set in the provider section.
+  profile: YOUR_AWS_PROFILE
+  skillName: ${self:org}-${self:app}-${self:custom.currentStage}
+  defaultStage: dev
+  defaultRegion: eu-central-1
+  currentStage: ${opt:stage, self:custom.defaultStage}
+  currentRegion: ${opt:region, self:custom.defaultRegion}
+  serverless-offline:
+    port: 4000
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${self:custom.currentStage}
+  region: ${self:custom.currentRegion}
+  profile: ${self:custom.profile}
+  stackName: ${self:app}-${self:service}-${self:custom.currentStage}
+  apiName: ${self:app}-${self:service}-${self:custom.currentStage}
+  memorySize: 128
+
+  # These environment variables are made available to our functions
+  # under process.env.
+  environment:
+    stage: ${self:custom.currentStage}
+
+  httpApi:
+    cors: true
+
+functions:
+  alexa:
+    name: ${self:custom.skillName}
+    handler: src/index.handler
+    events:
+      - alexaSkill: amzn1.ask.skill.f7a25b75-650a-473e-8089-798c87d19d60
+      - httpApi:
+          method: POST
+          path: /alexa
