@@ -11,7 +11,7 @@ if (process.argv.indexOf('--webhook') > -1) {
     Webhook.jovoApp = app;
 
     Webhook.listen(port, () => {
-        console.info(`Local server listening on port ${port}.`);
+        //console.info(`Local server listening on port ${port}.`);
     });
 
     Webhook.post('/webhook', async (req: Express.Request, res: Express.Response) => {

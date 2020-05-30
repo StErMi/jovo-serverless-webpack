@@ -4,11 +4,7 @@
 
 const config = {
     logging: true,
-    configStage: "default",
-
-    intentMap: {
-        'AMAZON.StopIntent': 'END',
-    },
+    configStage: "dev",
 
     db: {
         FileDb: {

@@ -4,6 +4,7 @@
       "es2017"
     ],
     "module": "commonjs",
+    "esModuleInterop": true,
     "noImplicitAny": true,
     "removeComments": false,
     "allowUnreachableCode": false,
@@ -18,9 +19,9 @@
   },
   "include": [
     "./src/**/*",
-    "./test/**/*"
   ],
   "exclude": [
+    "./test/**/*",
     "./dist/**/*",
     "./node_modules/**/*"
   ]

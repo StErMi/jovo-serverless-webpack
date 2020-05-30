@@ -15,6 +15,7 @@
     "@types/express": "^4.16.1",
     "@types/jest": "^23.3.5",
     "@types/socket.io-client": "^1.4.32",
+    "@zeit/ncc": "^0.22.3",
     "gulp": "^4.0.0",
     "gulp-install": "^1.1.0",
     "gulp-run-command": "0.0.9",
@@ -22,6 +23,7 @@
     "jest": "^23.6.0",
     "serverless-bundle": "^1.4.0-beta.6",
     "serverless-offline": "^6.2.0",
+    "serverless-plugin-ncc": "^0.4.0",
     "ts-jest": "^23.10.4",
     "tslint": "^5.14.0",
     "typescript": "^3.3.4"
@@ -29,13 +31,16 @@
   "scripts": {
     "test": "jest",
     "tsc": "tsc",
-    "build:ncc": "npm run tsc && ncc build ./src/index.ts -o ncc-build && cp ./dist/src/config.js ./ncc-build",
     "run:ncc": "cd ./ncc-build && node ./index.js --webhook",
     "tscw": "tsc --watch",
     "tslint": "tslint -p tsconfig.json -c tslint.json",
     "bundle": "gulp --gulpfile node_modules/jovo-framework/gulpfile.js build-ts --cwd ./",
     "start": "cd ./dist && node index.js --webhook",
-    "launch": "npm start -- --launch"
+    "launch": "npm start -- --launch",
+    "clean": "rm -rf dist",
+    "build:ncc": "ncc build src/index.ts -o dist -m -s",
+    "predeploy:ncc": "npm run clean && npm run build:ncc",
+    "deploy:ncc": "sls deploy --debug"
   },
   "jest": {
     "transform": {

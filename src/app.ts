@@ -1,20 +1,29 @@
 import {App} from 'jovo-framework';
 import {Alexa} from 'jovo-platform-alexa';
-import {JovoDebugger} from 'jovo-plugin-debugger';
-import {FileDb} from 'jovo-db-filedb';
 import {GoogleAssistant} from 'jovo-platform-googleassistant';
+
+import config from './config';
+import devConfig from './config.dev';
+import prodConfig from './config.prod';
 
 // ------------------------------------------------------------------
 // APP INITIALIZATION
 // ------------------------------------------------------------------
 
-const app = new App();
+let appConfig = null;
+if( process.env.stage === "dev" ) {
+    appConfig = devConfig;
+} else if ( process.env.stage === "prod" ) {
+    appConfig = prodConfig;
+} else {
+    appConfig = config;
+}
+
+const app = new App(appConfig);
 
 app.use(
     new Alexa(),
-    new GoogleAssistant(),
-    new JovoDebugger(),
-    new FileDb(),
+    new GoogleAssistant()
 );
 
 
@@ -28,7 +37,7 @@ app.setHandler({
     },
 
     HelloWorldIntent() {
-        this.ask('Hello World! What\'s your name?', 'Please tell me your name.');
+        this.ask('Hello World! What\'s your name? ' + this.$config.configStage, 'Please tell me your name.');
     },
 
     MyNameIsIntent() {

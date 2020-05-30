@@ -3,12 +3,8 @@
 // ------------------------------------------------------------------
 
 const config = {
-    logging: true,
-    configStage: "default",
-
-    intentMap: {
-        'AMAZON.StopIntent': 'END',
-    },
+    logging: false,
+    configStage: "prod",
 
     db: {
         FileDb: {
