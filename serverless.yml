@@ -8,8 +8,8 @@ package:
   excludeDevDependencies: true
 
 plugins:
-  - serverless-plugin-ncc
-  #- serverless-bundle
+  #- serverless-plugin-ncc
+  - serverless-bundle
   - serverless-offline
 
 custom:
